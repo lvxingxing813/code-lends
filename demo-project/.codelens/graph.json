@@ -1,0 +1,512 @@
+{
+  "version": "0.1.0",
+  "root": "/Users/admin/个人学习/demo/demo-project",
+  "generatedAt": "2026-04-25T13:35:45.733616+00:00",
+  "nodes": [
+    {
+      "id": "module:backend/app/auth.py",
+      "type": "Module",
+      "name": "auth",
+      "path": "backend/app/auth.py",
+      "metadata": {
+        "language": "python",
+        "complexity": 2
+      }
+    },
+    {
+      "id": "function:backend/app/auth.py:login",
+      "type": "Module",
+      "name": "login",
+      "path": "backend/app/auth.py",
+      "metadata": {
+        "kind": "function",
+        "language": "python"
+      }
+    },
+    {
+      "id": "api:POST /api/login",
+      "type": "API",
+      "name": "POST /api/login",
+      "path": "backend/app/auth.py",
+      "metadata": {
+        "method": "POST",
+        "route": "/api/login",
+        "framework": "fastapi",
+        "sources": [
+          "backend/app/auth.py",
+          "frontend/src/lib/api.ts"
+        ],
+        "calledFrom": "frontend/src/lib/api.ts"
+      }
+    },
+    {
+      "id": "function:backend/app/auth.py:check_permission",
+      "type": "Module",
+      "name": "check_permission",
+      "path": "backend/app/auth.py",
+      "metadata": {
+        "kind": "function",
+        "language": "python"
+      }
+    },
+    {
+      "id": "module:backend/app/main.py",
+      "type": "Module",
+      "name": "main",
+      "path": "backend/app/main.py",
+      "metadata": {
+        "language": "python",
+        "complexity": 1
+      }
+    },
+    {
+      "id": "module:backend/app/orders.py",
+      "type": "Module",
+      "name": "orders",
+      "path": "backend/app/orders.py",
+      "metadata": {
+        "language": "python",
+        "complexity": 1
+      }
+    },
+    {
+      "id": "function:backend/app/orders.py:checkout",
+      "type": "Module",
+      "name": "checkout",
+      "path": "backend/app/orders.py",
+      "metadata": {
+        "kind": "function",
+        "language": "python"
+      }
+    },
+    {
+      "id": "api:POST /api/orders/checkout",
+      "type": "API",
+      "name": "POST /api/orders/checkout",
+      "path": "backend/app/orders.py",
+      "metadata": {
+        "method": "POST",
+        "route": "/api/orders/checkout",
+        "framework": "fastapi",
+        "sources": [
+          "backend/app/orders.py",
+          "frontend/src/lib/api.ts"
+        ],
+        "calledFrom": "frontend/src/lib/api.ts"
+      }
+    },
+    {
+      "id": "module:backend/app/users.py",
+      "type": "Module",
+      "name": "users",
+      "path": "backend/app/users.py",
+      "metadata": {
+        "language": "python",
+        "complexity": 2
+      }
+    },
+    {
+      "id": "function:backend/app/users.py:list_users",
+      "type": "Module",
+      "name": "list_users",
+      "path": "backend/app/users.py",
+      "metadata": {
+        "kind": "function",
+        "language": "python"
+      }
+    },
+    {
+      "id": "api:GET /api/users",
+      "type": "API",
+      "name": "GET /api/users",
+      "path": "backend/app/users.py",
+      "metadata": {
+        "method": "GET",
+        "route": "/api/users",
+        "framework": "fastapi",
+        "sources": [
+          "backend/app/users.py",
+          "frontend/src/lib/api.ts"
+        ],
+        "calledFrom": "frontend/src/lib/api.ts"
+      }
+    },
+    {
+      "id": "function:backend/app/users.py:validate_user_permission",
+      "type": "Module",
+      "name": "validate_user_permission",
+      "path": "backend/app/users.py",
+      "metadata": {
+        "kind": "function",
+        "language": "python"
+      }
+    },
+    {
+      "id": "page:frontend/src/app/login/page.tsx",
+      "type": "Page",
+      "name": "login",
+      "path": "frontend/src/app/login/page.tsx",
+      "metadata": {
+        "language": "tsx",
+        "framework": "nextjs",
+        "route": "/login",
+        "stateApis": [],
+        "complexity": 1
+      }
+    },
+    {
+      "id": "component:frontend/src/app/login/page.tsx:LoginPage",
+      "type": "Component",
+      "name": "LoginPage",
+      "path": "frontend/src/app/login/page.tsx",
+      "metadata": {
+        "framework": "react"
+      }
+    },
+    {
+      "id": "page:frontend/src/app/orders/page.tsx",
+      "type": "Page",
+      "name": "orders",
+      "path": "frontend/src/app/orders/page.tsx",
+      "metadata": {
+        "language": "tsx",
+        "framework": "nextjs",
+        "route": "/orders",
+        "stateApis": [],
+        "complexity": 2
+      }
+    },
+    {
+      "id": "component:frontend/src/app/orders/page.tsx:OrdersPage",
+      "type": "Component",
+      "name": "OrdersPage",
+      "path": "frontend/src/app/orders/page.tsx",
+      "metadata": {
+        "framework": "react"
+      }
+    },
+    {
+      "id": "feature:frontend/src/app/orders/page.tsx:onClick",
+      "type": "Feature",
+      "name": "onClick",
+      "path": "frontend/src/app/orders/page.tsx",
+      "metadata": {
+        "interaction": "onClick"
+      }
+    },
+    {
+      "id": "page:frontend/src/app/users/page.tsx",
+      "type": "Page",
+      "name": "users",
+      "path": "frontend/src/app/users/page.tsx",
+      "metadata": {
+        "language": "tsx",
+        "framework": "nextjs",
+        "route": "/users",
+        "stateApis": [],
+        "complexity": 2
+      }
+    },
+    {
+      "id": "component:frontend/src/app/users/page.tsx:UsersPage",
+      "type": "Component",
+      "name": "UsersPage",
+      "path": "frontend/src/app/users/page.tsx",
+      "metadata": {
+        "framework": "react"
+      }
+    },
+    {
+      "id": "feature:frontend/src/app/users/page.tsx:onClick",
+      "type": "Feature",
+      "name": "onClick",
+      "path": "frontend/src/app/users/page.tsx",
+      "metadata": {
+        "interaction": "onClick"
+      }
+    },
+    {
+      "id": "component:frontend/src/components/LoginForm.tsx",
+      "type": "Component",
+      "name": "LoginForm",
+      "path": "frontend/src/components/LoginForm.tsx",
+      "metadata": {
+        "language": "tsx",
+        "framework": "react",
+        "route": null,
+        "stateApis": [],
+        "complexity": 2
+      }
+    },
+    {
+      "id": "component:frontend/src/components/LoginForm.tsx:LoginForm",
+      "type": "Component",
+      "name": "LoginForm",
+      "path": "frontend/src/components/LoginForm.tsx",
+      "metadata": {
+        "framework": "react"
+      }
+    },
+    {
+      "id": "feature:frontend/src/components/LoginForm.tsx:onClick",
+      "type": "Feature",
+      "name": "onClick",
+      "path": "frontend/src/components/LoginForm.tsx",
+      "metadata": {
+        "interaction": "onClick"
+      }
+    },
+    {
+      "id": "module:frontend/src/lib/api.ts",
+      "type": "Module",
+      "name": "api",
+      "path": "frontend/src/lib/api.ts",
+      "metadata": {
+        "language": "ts",
+        "framework": null,
+        "route": null,
+        "stateApis": [],
+        "complexity": 1
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "module:backend/app/auth.py",
+      "target": "module:fastapi",
+      "type": "DEPENDS",
+      "metadata": {
+        "confidence": 0.5
+      }
+    },
+    {
+      "source": "module:backend/app/auth.py",
+      "target": "function:backend/app/auth.py:login",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "module:backend/app/auth.py",
+      "target": "api:POST /api/login",
+      "type": "EXPOSES",
+      "metadata": {}
+    },
+    {
+      "source": "api:POST /api/login",
+      "target": "function:backend/app/auth.py:login",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "api:POST /api/login",
+      "target": "module:backend/app/auth.py",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "module:backend/app/auth.py",
+      "target": "function:backend/app/auth.py:check_permission",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "module:backend/app/main.py",
+      "target": "module:fastapi",
+      "type": "DEPENDS",
+      "metadata": {
+        "confidence": 0.5
+      }
+    },
+    {
+      "source": "module:backend/app/main.py",
+      "target": "module:app.auth",
+      "type": "DEPENDS",
+      "metadata": {
+        "confidence": 0.5
+      }
+    },
+    {
+      "source": "module:backend/app/main.py",
+      "target": "module:app.orders",
+      "type": "DEPENDS",
+      "metadata": {
+        "confidence": 0.5
+      }
+    },
+    {
+      "source": "module:backend/app/main.py",
+      "target": "module:app.users",
+      "type": "DEPENDS",
+      "metadata": {
+        "confidence": 0.5
+      }
+    },
+    {
+      "source": "module:backend/app/orders.py",
+      "target": "module:fastapi",
+      "type": "DEPENDS",
+      "metadata": {
+        "confidence": 0.5
+      }
+    },
+    {
+      "source": "module:backend/app/orders.py",
+      "target": "function:backend/app/orders.py:checkout",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "module:backend/app/orders.py",
+      "target": "api:POST /api/orders/checkout",
+      "type": "EXPOSES",
+      "metadata": {}
+    },
+    {
+      "source": "api:POST /api/orders/checkout",
+      "target": "function:backend/app/orders.py:checkout",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "api:POST /api/orders/checkout",
+      "target": "module:backend/app/orders.py",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "module:backend/app/users.py",
+      "target": "module:fastapi",
+      "type": "DEPENDS",
+      "metadata": {
+        "confidence": 0.5
+      }
+    },
+    {
+      "source": "module:backend/app/users.py",
+      "target": "function:backend/app/users.py:list_users",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "module:backend/app/users.py",
+      "target": "api:GET /api/users",
+      "type": "EXPOSES",
+      "metadata": {}
+    },
+    {
+      "source": "api:GET /api/users",
+      "target": "function:backend/app/users.py:list_users",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "api:GET /api/users",
+      "target": "module:backend/app/users.py",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "module:backend/app/users.py",
+      "target": "function:backend/app/users.py:validate_user_permission",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "page:frontend/src/app/login/page.tsx",
+      "target": "component:frontend/src/app/login/page.tsx:LoginPage",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "page:frontend/src/app/login/page.tsx",
+      "target": "component:frontend/src/components/LoginForm.tsx",
+      "type": "DEPENDS",
+      "metadata": {
+        "import": "../../components/LoginForm",
+        "confidence": 0.6
+      }
+    },
+    {
+      "source": "page:frontend/src/app/orders/page.tsx",
+      "target": "component:frontend/src/app/orders/page.tsx:OrdersPage",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "page:frontend/src/app/orders/page.tsx",
+      "target": "module:frontend/src/lib/api.ts",
+      "type": "DEPENDS",
+      "metadata": {
+        "import": "../../lib/api",
+        "confidence": 0.6
+      }
+    },
+    {
+      "source": "page:frontend/src/app/orders/page.tsx",
+      "target": "feature:frontend/src/app/orders/page.tsx:onClick",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "page:frontend/src/app/users/page.tsx",
+      "target": "component:frontend/src/app/users/page.tsx:UsersPage",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "page:frontend/src/app/users/page.tsx",
+      "target": "module:frontend/src/lib/api.ts",
+      "type": "DEPENDS",
+      "metadata": {
+        "import": "../../lib/api",
+        "confidence": 0.6
+      }
+    },
+    {
+      "source": "page:frontend/src/app/users/page.tsx",
+      "target": "feature:frontend/src/app/users/page.tsx:onClick",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "component:frontend/src/components/LoginForm.tsx",
+      "target": "component:frontend/src/components/LoginForm.tsx:LoginForm",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "component:frontend/src/components/LoginForm.tsx",
+      "target": "module:frontend/src/lib/api.ts",
+      "type": "DEPENDS",
+      "metadata": {
+        "import": "../lib/api",
+        "confidence": 0.6
+      }
+    },
+    {
+      "source": "component:frontend/src/components/LoginForm.tsx",
+      "target": "feature:frontend/src/components/LoginForm.tsx:onClick",
+      "type": "DEPENDS",
+      "metadata": {}
+    },
+    {
+      "source": "module:frontend/src/lib/api.ts",
+      "target": "api:POST /api/login",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "module:frontend/src/lib/api.ts",
+      "target": "api:POST /api/orders/checkout",
+      "type": "CALLS",
+      "metadata": {}
+    },
+    {
+      "source": "module:frontend/src/lib/api.ts",
+      "target": "api:GET /api/users",
+      "type": "CALLS",
+      "metadata": {}
+    }
+  ],
+  "warnings": []
+}

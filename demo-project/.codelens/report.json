@@ -1,0 +1,277 @@
+{
+  "requirement": "新增用户批量导入功能，支持 Excel 上传",
+  "directImpact": [
+    "module:backend/app/users.py",
+    "function:backend/app/users.py:list_users",
+    "api:GET /api/users",
+    "function:backend/app/users.py:validate_user_permission",
+    "page:frontend/src/app/users/page.tsx",
+    "component:frontend/src/app/users/page.tsx:UsersPage",
+    "feature:frontend/src/app/users/page.tsx:onClick"
+  ],
+  "indirectImpact": [
+    "module:fastapi",
+    "module:frontend/src/lib/api.ts",
+    "module:backend/app/auth.py",
+    "module:backend/app/main.py",
+    "module:backend/app/orders.py",
+    "api:POST /api/login",
+    "api:POST /api/orders/checkout",
+    "page:frontend/src/app/orders/page.tsx",
+    "component:frontend/src/components/LoginForm.tsx",
+    "function:backend/app/auth.py:login",
+    "function:backend/app/auth.py:check_permission",
+    "module:app.auth",
+    "module:app.orders",
+    "module:app.users",
+    "function:backend/app/orders.py:checkout",
+    "component:frontend/src/app/orders/page.tsx:OrdersPage",
+    "feature:frontend/src/app/orders/page.tsx:onClick",
+    "component:frontend/src/components/LoginForm.tsx:LoginForm",
+    "feature:frontend/src/components/LoginForm.tsx:onClick",
+    "page:frontend/src/app/login/page.tsx"
+  ],
+  "riskMap": {
+    "module:backend/app/users.py": {
+      "score": 0.71,
+      "reason": "需求关键词直接命中，复杂度 2，关联节点 5 个"
+    },
+    "function:backend/app/users.py:list_users": {
+      "score": 0.62,
+      "reason": "需求关键词直接命中"
+    },
+    "api:GET /api/users": {
+      "score": 0.67,
+      "reason": "需求关键词直接命中，关联节点 4 个"
+    },
+    "function:backend/app/users.py:validate_user_permission": {
+      "score": 0.61,
+      "reason": "需求关键词直接命中"
+    },
+    "page:frontend/src/app/users/page.tsx": {
+      "score": 0.68,
+      "reason": "需求关键词直接命中，复杂度 2，关联节点 3 个"
+    },
+    "component:frontend/src/app/users/page.tsx:UsersPage": {
+      "score": 0.57,
+      "reason": "需求关键词直接命中"
+    },
+    "feature:frontend/src/app/users/page.tsx:onClick": {
+      "score": 0.59,
+      "reason": "需求关键词直接命中"
+    },
+    "module:frontend/src/lib/api.ts": {
+      "score": 0.48,
+      "reason": "依赖链路间接受影响，关联节点 6 个"
+    },
+    "module:backend/app/auth.py": {
+      "score": 0.52,
+      "reason": "依赖链路间接受影响，复杂度 2，关联节点 5 个"
+    },
+    "module:backend/app/main.py": {
+      "score": 0.45,
+      "reason": "依赖链路间接受影响，关联节点 4 个"
+    },
+    "module:backend/app/orders.py": {
+      "score": 0.45,
+      "reason": "依赖链路间接受影响，关联节点 4 个"
+    },
+    "api:POST /api/login": {
+      "score": 0.47,
+      "reason": "依赖链路间接受影响，关联节点 4 个"
+    },
+    "api:POST /api/orders/checkout": {
+      "score": 0.47,
+      "reason": "依赖链路间接受影响，关联节点 4 个"
+    },
+    "page:frontend/src/app/orders/page.tsx": {
+      "score": 0.48,
+      "reason": "依赖链路间接受影响，复杂度 2，关联节点 3 个"
+    },
+    "component:frontend/src/components/LoginForm.tsx": {
+      "score": 0.46,
+      "reason": "依赖链路间接受影响，复杂度 2，关联节点 4 个"
+    },
+    "function:backend/app/auth.py:login": {
+      "score": 0.42,
+      "reason": "依赖链路间接受影响"
+    },
+    "function:backend/app/auth.py:check_permission": {
+      "score": 0.41,
+      "reason": "依赖链路间接受影响"
+    },
+    "function:backend/app/orders.py:checkout": {
+      "score": 0.42,
+      "reason": "依赖链路间接受影响"
+    },
+    "component:frontend/src/app/orders/page.tsx:OrdersPage": {
+      "score": 0.37,
+      "reason": "依赖链路间接受影响"
+    },
+    "feature:frontend/src/app/orders/page.tsx:onClick": {
+      "score": 0.39,
+      "reason": "依赖链路间接受影响"
+    },
+    "component:frontend/src/components/LoginForm.tsx:LoginForm": {
+      "score": 0.37,
+      "reason": "依赖链路间接受影响"
+    },
+    "feature:frontend/src/components/LoginForm.tsx:onClick": {
+      "score": 0.39,
+      "reason": "依赖链路间接受影响"
+    },
+    "page:frontend/src/app/login/page.tsx": {
+      "score": 0.41,
+      "reason": "依赖链路间接受影响"
+    }
+  },
+  "regressionList": [
+    {
+      "feature": "users",
+      "priority": "P0",
+      "reason": "直接改动或需求命中",
+      "nodeId": "module:backend/app/users.py"
+    },
+    {
+      "feature": "list_users",
+      "priority": "P0",
+      "reason": "直接改动或需求命中",
+      "nodeId": "function:backend/app/users.py:list_users"
+    },
+    {
+      "feature": "GET /api/users",
+      "priority": "P0",
+      "reason": "直接改动或需求命中",
+      "nodeId": "api:GET /api/users"
+    },
+    {
+      "feature": "validate_user_permission",
+      "priority": "P0",
+      "reason": "直接改动或需求命中",
+      "nodeId": "function:backend/app/users.py:validate_user_permission"
+    },
+    {
+      "feature": "users",
+      "priority": "P0",
+      "reason": "直接改动或需求命中",
+      "nodeId": "page:frontend/src/app/users/page.tsx"
+    },
+    {
+      "feature": "UsersPage",
+      "priority": "P0",
+      "reason": "直接改动或需求命中",
+      "nodeId": "component:frontend/src/app/users/page.tsx:UsersPage"
+    },
+    {
+      "feature": "onClick",
+      "priority": "P0",
+      "reason": "直接改动或需求命中",
+      "nodeId": "feature:frontend/src/app/users/page.tsx:onClick"
+    },
+    {
+      "feature": "api",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "module:frontend/src/lib/api.ts"
+    },
+    {
+      "feature": "auth",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "module:backend/app/auth.py"
+    },
+    {
+      "feature": "main",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "module:backend/app/main.py"
+    },
+    {
+      "feature": "orders",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "module:backend/app/orders.py"
+    },
+    {
+      "feature": "POST /api/login",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "api:POST /api/login"
+    },
+    {
+      "feature": "POST /api/orders/checkout",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "api:POST /api/orders/checkout"
+    },
+    {
+      "feature": "orders",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "page:frontend/src/app/orders/page.tsx"
+    },
+    {
+      "feature": "LoginForm",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "component:frontend/src/components/LoginForm.tsx"
+    },
+    {
+      "feature": "login",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "function:backend/app/auth.py:login"
+    },
+    {
+      "feature": "check_permission",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "function:backend/app/auth.py:check_permission"
+    },
+    {
+      "feature": "checkout",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "function:backend/app/orders.py:checkout"
+    },
+    {
+      "feature": "OrdersPage",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "component:frontend/src/app/orders/page.tsx:OrdersPage"
+    },
+    {
+      "feature": "onClick",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "feature:frontend/src/app/orders/page.tsx:onClick"
+    },
+    {
+      "feature": "LoginForm",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "component:frontend/src/components/LoginForm.tsx:LoginForm"
+    },
+    {
+      "feature": "onClick",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "feature:frontend/src/components/LoginForm.tsx:onClick"
+    },
+    {
+      "feature": "login",
+      "priority": "P1",
+      "reason": "依赖链路间接受影响",
+      "nodeId": "page:frontend/src/app/login/page.tsx"
+    }
+  ],
+  "issues": [
+    {
+      "type": "边界缺失",
+      "description": "批量导入或上传需求未说明单次上限、文件大小、失败处理策略",
+      "severity": "medium",
+      "suggestion": "补充文件大小、行数上限、格式校验、失败回滚和部分成功处理规则"
+    }
+  ],
+  "warnings": []
+}
