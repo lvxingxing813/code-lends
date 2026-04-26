@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+CODELENS_HOME=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+export CODELENS_HOME
+export PYTHONPATH="$CODELENS_HOME/src${PYTHONPATH:+:$PYTHONPATH}"
+
+scan() {
+  python3 -m codelens.cli scan "$@"
+}
+
+analyze() {
+  python3 -m codelens.cli analyze "$@"
+}
+
+serve() {
+  python3 -m codelens.cli serve "$@"
+}
+
+export_report() {
+  python3 -m codelens.cli export "$@"
+}
+
+codelens() {
+  python3 -m codelens.cli "$@"
+}
+
+echo "CodeLens commands loaded: scan, analyze, serve, export_report, codelens"

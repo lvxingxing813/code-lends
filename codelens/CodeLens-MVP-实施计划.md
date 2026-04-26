@@ -16,9 +16,10 @@ demo/
 
 ```bash
 cd codelens
-PYTHONPATH=src python3 -m codelens.cli scan ../demo-project
-PYTHONPATH=src python3 -m codelens.cli analyze "新增用户批量导入功能，支持 Excel 上传" --project ../demo-project
-PYTHONPATH=src python3 -m codelens.cli serve --project ../demo-project --host 127.0.0.1 --port 8000
+source ./use
+scan ../demo-project
+analyze "新增用户批量导入功能，支持 Excel 上传" --project ../demo-project
+serve --project ../demo-project --host 127.0.0.1 --port 8000
 ```
 
 浏览器打开：

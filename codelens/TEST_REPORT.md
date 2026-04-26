@@ -16,9 +16,10 @@ OK
 ## 演示流程
 
 ```bash
-PYTHONPATH=src python3 -m codelens.cli scan ../demo-project
-PYTHONPATH=src python3 -m codelens.cli analyze "新增用户批量导入功能，支持 Excel 上传" --project ../demo-project
-PYTHONPATH=src python3 -m codelens.cli export --project ../demo-project
+source ./use
+scan ../demo-project
+analyze "新增用户批量导入功能，支持 Excel 上传" --project ../demo-project
+export_report --project ../demo-project
 ```
 
 期望产物：
