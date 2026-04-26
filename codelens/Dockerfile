@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir -e .
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "codelens scan /app/demo-project && codelens analyze '修改用户登录验证码规则' --project /app/demo-project && codelens serve --project /app/demo-project --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "codelens scan /app/demo-project && codelens analyze '新增用户批量导入功能，支持 Excel 上传' --project /app/demo-project && codelens serve --project /app/demo-project --host 0.0.0.0 --port 8000"]

@@ -27,6 +27,8 @@ def analyze_impact(requirement: str, graph: Graph) -> dict:
     direct_ids = [node.id for node in direct_nodes]
     indirect_ids = [node_id for node_id in reachable_nodes(graph, direct_ids, max_depth=3) if node_id not in direct_ids]
     degree = degree_by_node(graph)
+    feature_points = [node.id for node in graph.nodes if node.type in {"Page", "Component", "API", "Feature"}]
+    logic_issues = review_requirement(requirement)
 
     risk_map = {}
     for node_id in direct_ids + indirect_ids:
@@ -45,11 +47,16 @@ def analyze_impact(requirement: str, graph: Graph) -> dict:
 
     return {
         "requirement": requirement,
+        "featurePoints": feature_points,
+        "matchedFeatures": direct_ids,
+        "relatedFeatures": indirect_ids,
+        "logicIssues": logic_issues,
+        "regressionPoints": regression_list,
         "directImpact": direct_ids,
         "indirectImpact": indirect_ids,
         "riskMap": risk_map,
         "regressionList": regression_list,
-        "issues": review_requirement(requirement),
+        "issues": logic_issues,
         "warnings": [],
     }
 
@@ -77,6 +84,10 @@ def _requirement_tokens(requirement: str) -> Set[str]:
         if chinese in requirement:
             tokens.update(alias.lower() for alias in aliases)
             tokens.add(chinese)
+        if chinese == "导入" and chinese in requirement:
+            tokens.update({"batch", "import", "upload"})
+        if chinese == "上传" and chinese in requirement:
+            tokens.update({"upload", "file"})
 
     for word in re.findall(r"[\u4e00-\u9fff]{2,}", requirement):
         tokens.add(word)
@@ -94,4 +105,3 @@ def _node_tokens(node: Node) -> List[str]:
         elif isinstance(value, list):
             tokens.extend(str(item) for item in value)
     return tokens
-

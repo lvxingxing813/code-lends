@@ -7,9 +7,7 @@ from codelens.graph.models import Graph
 
 
 def render_static_report(graph: Graph, report: Dict[str, Any]) -> str:
-    graph_json = _script_json(graph.to_dict())
-    report_json = _script_json(report)
-    return _template(graph_json, report_json)
+    return _template(_script_json(graph.to_dict()), _script_json(report))
 
 
 def _script_json(payload: Dict[str, Any]) -> str:
@@ -22,7 +20,7 @@ def _template(graph_json: str, report_json: str) -> str:
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CodeLens Demo Report</title>
+  <title>CodeLens 功能点图谱</title>
   <style>
     :root {
       --paper: #f5f1e8;
@@ -93,10 +91,9 @@ def _template(graph_json: str, report_json: str) -> str:
       box-shadow: 0 14px 28px var(--shadow);
       padding: 18px;
     }
-    h2 {
-      font-size: 15px;
-      margin: 0 0 14px;
-    }
+    h1, h2 { margin: 0; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 15px; margin: 0 0 14px; }
     .metrics {
       display: grid;
       gap: 12px;
@@ -196,10 +193,7 @@ def _template(graph_json: str, report_json: str) -> str:
     .risk[data-level="mid"] { border-left: 5px solid var(--amber); }
     .risk[data-level="low"] { border-left: 5px solid var(--green); }
     .issue { border-left: 5px solid var(--amber); }
-    .empty {
-      color: var(--muted);
-      padding: 18px 0;
-    }
+    .empty { color: var(--muted); padding: 18px 0; }
     @media (max-width: 960px) {
       header, main { grid-template-columns: 1fr; }
       .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -210,7 +204,7 @@ def _template(graph_json: str, report_json: str) -> str:
   <header>
     <div>
       <div class="brand">CodeLens</div>
-      <div class="subtitle">项目全景透视 + 需求影响推理报告</div>
+      <div class="subtitle">现有功能点扫描 + 新需求审查</div>
     </div>
     <div class="requirement">
       <small>当前需求</small>
@@ -221,21 +215,21 @@ def _template(graph_json: str, report_json: str) -> str:
     <div>
       <div class="metrics" id="metrics"></div>
       <section>
-        <h2>功能全景节点</h2>
+        <h2>现有功能点</h2>
         <div class="grid" id="nodes"></div>
       </section>
       <section style="margin-top:18px">
-        <h2>回归测试矩阵</h2>
+        <h2>建议回归点</h2>
         <div id="matrix"></div>
       </section>
     </div>
     <aside class="split">
       <section>
-        <h2>风险热力</h2>
+        <h2>高风险功能点</h2>
         <div id="risks"></div>
       </section>
       <section>
-        <h2>需求逻辑审查</h2>
+        <h2>逻辑漏洞</h2>
         <div id="issues"></div>
       </section>
     </aside>
@@ -246,7 +240,8 @@ def _template(graph_json: str, report_json: str) -> str:
     const graph = JSON.parse(document.getElementById("graph-data").textContent);
     const report = JSON.parse(document.getElementById("report-data").textContent);
     const byId = new Map((graph.nodes || []).map(node => [node.id, node]));
-    const impacted = new Set([...(report.directImpact || []), ...(report.indirectImpact || [])]);
+    const matched = new Set([...(report.matchedFeatures || report.directImpact || [])]);
+    const related = new Set([...(report.relatedFeatures || report.indirectImpact || [])]);
     document.getElementById("requirement").textContent = report.requirement || "未输入需求";
 
     function escapeText(value) {
@@ -268,20 +263,20 @@ def _template(graph_json: str, report_json: str) -> str:
     }
     function renderMetrics() {
       const metrics = [
-        ["节点", (graph.nodes || []).length],
+        ["功能点", (graph.nodes || []).filter(node => node.type !== "Module").length],
         ["关系", (graph.edges || []).length],
-        ["直接影响", (report.directImpact || []).length],
-        ["问题", (report.issues || []).length]
+        ["命中", matched.size + related.size],
+        ["漏洞", (report.logicIssues || report.issues || []).length]
       ];
       document.getElementById("metrics").innerHTML = metrics.map(([label, value]) =>
         `<div class="metric"><strong>${value}</strong><span>${escapeText(label)}</span></div>`
       ).join("");
     }
     function renderNodes() {
-      const nodes = [...(graph.nodes || [])].sort((a, b) => Number(impacted.has(b.id)) - Number(impacted.has(a.id)));
+      const nodes = (graph.nodes || []).filter(node => node.type !== "Module");
       document.getElementById("nodes").innerHTML = nodes.map(node => {
-        const mark = impacted.has(node.id) ? " · affected" : "";
-        return `<article class="${nodeClass(node.type)}"><strong>${escapeText(node.name)}</strong><small>${escapeText(node.type)}${mark}<br>${escapeText(node.path || node.id)}</small></article>`;
+        const mark = matched.has(node.id) ? " · 直接命中" : related.has(node.id) ? " · 关联命中" : "";
+        return `<article class="${nodeClass(node.type)}"><strong>${escapeText(node.name)}</strong><small>${escapeText(node.type)}${escapeText(mark)}<br>${escapeText(node.path || node.id)}</small></article>`;
       }).join("");
     }
     function renderRisks() {
@@ -296,24 +291,16 @@ def _template(graph_json: str, report_json: str) -> str:
       }).join("");
     }
     function renderMatrix() {
-      const items = report.regressionList || [];
-      if (!items.length) {
-        document.getElementById("matrix").innerHTML = `<div class="empty">暂无回归清单</div>`;
-        return;
-      }
-      document.getElementById("matrix").innerHTML = `<table><thead><tr><th>功能</th><th>优先级</th><th>原因</th></tr></thead><tbody>` +
-        items.map(item => `<tr><td>${escapeText(item.feature)}</td><td><span class="badge ${String(item.priority).toLowerCase()}">${escapeText(item.priority)}</span></td><td>${escapeText(item.reason)}</td></tr>`).join("") +
-        `</tbody></table>`;
+      const items = report.regressionPoints || report.regressionList || [];
+      document.getElementById("matrix").innerHTML = items.length
+        ? `<table><thead><tr><th>功能点</th><th>优先级</th><th>原因</th></tr></thead><tbody>${items.map(item => `<tr><td>${escapeText(item.feature)}</td><td><span class="badge ${String(item.priority).toLowerCase()}">${escapeText(item.priority)}</span></td><td>${escapeText(item.reason)}</td></tr>`).join("")}</tbody></table>`
+        : `<div class="empty">暂无回归点</div>`;
     }
     function renderIssues() {
-      const issues = report.issues || [];
-      if (!issues.length) {
-        document.getElementById("issues").innerHTML = `<div class="empty">未发现需求问题</div>`;
-        return;
-      }
-      document.getElementById("issues").innerHTML = issues.map(issue =>
-        `<article class="issue"><strong>${escapeText(issue.type)} · ${escapeText(issue.severity)}</strong><small>${escapeText(issue.description)}<br>${escapeText(issue.suggestion)}</small></article>`
-      ).join("");
+      const issues = report.logicIssues || report.issues || [];
+      document.getElementById("issues").innerHTML = issues.length
+        ? issues.map(issue => `<article class="issue"><strong>${escapeText(issue.type)} · ${escapeText(issue.severity)}</strong><small>${escapeText(issue.description)}<br>${escapeText(issue.suggestion)}</small></article>`).join("")
+        : `<div class="empty">未发现逻辑漏洞</div>`;
     }
     renderMetrics();
     renderNodes();

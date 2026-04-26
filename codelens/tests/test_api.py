@@ -38,7 +38,7 @@ class ApiTest(unittest.TestCase):
     def test_dashboard_html_contains_impact_graph(self):
         html = _dashboard_html()
 
-        self.assertIn("影响链路图", html)
+        self.assertIn("现有功能点图谱", html)
         self.assertIn('id="stage"', html)
         self.assertIn("/api/graph", html)
 

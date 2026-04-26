@@ -80,8 +80,11 @@ def _scan(project: Path) -> int:
     graph = scan_project(project)
     output = graph_path(project)
     save_graph(graph, output)
+    feature_count = len([node for node in graph.nodes if node.type in {"Page", "Component", "API", "Feature"}])
+    code_count = len(graph.nodes) - feature_count
     print("Graph written: %s" % output)
-    print("Nodes: %d" % len(graph.nodes))
+    print("Functional nodes: %d" % feature_count)
+    print("Code nodes: %d" % code_count)
     print("Edges: %d" % len(graph.edges))
     if graph.warnings:
         print("Warnings: %d" % len(graph.warnings))
@@ -105,9 +108,9 @@ def _analyze(requirement: str, project: Path) -> int:
     output = report_path(project)
     save_report(report, output)
     print("Report written: %s" % output)
-    print("Direct impact: %d" % len(report["directImpact"]))
-    print("Indirect impact: %d" % len(report["indirectImpact"]))
-    print("Issues: %d" % len(report["issues"]))
+    print("Matched features: %d" % len(report["matchedFeatures"]))
+    print("Related features: %d" % len(report["relatedFeatures"]))
+    print("Logic issues: %d" % len(report["logicIssues"]))
     return 0
 
 

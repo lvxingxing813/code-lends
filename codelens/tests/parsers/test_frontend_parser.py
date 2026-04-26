@@ -61,6 +61,7 @@ export function LoginForm() {
 
             self.assertTrue(any(node.type == "Component" and node.name == "LoginForm" for node in result.nodes))
             self.assertTrue(any(node.metadata.get("interaction") == "onClick" for node in result.nodes))
+            self.assertTrue(any(node.type == "Feature" and node.name == "点击：登录" for node in result.nodes))
 
 
 if __name__ == "__main__":

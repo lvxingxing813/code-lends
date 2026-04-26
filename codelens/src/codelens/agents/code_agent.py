@@ -3,9 +3,7 @@ from pathlib import Path
 from codelens.graph.models import Graph
 from codelens.parsers.common import collect_source_files
 from codelens.parsers.frontend_parser import parse_frontend_file
-from codelens.parsers.java_parser import parse_java_file
 from codelens.parsers.markdown_parser import parse_markdown_file
-from codelens.parsers.python_parser import parse_python_file
 
 
 def scan_project(root: Path) -> Graph:
@@ -15,12 +13,8 @@ def scan_project(root: Path) -> Graph:
     graph.warnings.extend(warnings)
 
     for path in files:
-        if path.suffix == ".py":
-            result = parse_python_file(path, root)
-        elif path.suffix in {".ts", ".tsx", ".js", ".jsx"}:
+        if path.suffix in {".ts", ".tsx", ".js", ".jsx"}:
             result = parse_frontend_file(path, root)
-        elif path.suffix == ".java":
-            result = parse_java_file(path, root)
         elif path.suffix in {".md", ".mdx"}:
             result = parse_markdown_file(path, root)
         else:

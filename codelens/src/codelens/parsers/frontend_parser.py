@@ -11,6 +11,10 @@ COMPONENT_RE = re.compile(
 FETCH_RE = re.compile(r"fetch\(\s*[\"']([^\"']+)[\"']\s*(?:,\s*\{(?P<options>.*?)\})?", re.DOTALL)
 METHOD_RE = re.compile(r"method\s*:\s*[\"']([A-Za-z]+)[\"']")
 INTERACTION_RE = re.compile(r"\b(onClick|onSubmit|onChange|onBlur|onFocus)=")
+INTERACTION_TAG_RE = re.compile(
+    r"<(?P<tag>[A-Za-z][A-Za-z0-9.]*)\b(?P<attrs>[^>]*)\b(?P<event>onClick|onSubmit|onChange|onBlur|onFocus)=\{?(?P<handler>[^}\s>]+)\}?[^>]*>(?P<body>.*?)</(?P=tag)>",
+    re.DOTALL,
+)
 IMPORT_RE = re.compile(r"import\s+.*?\s+from\s+[\"']([^\"']+)[\"']")
 STATE_RE = re.compile(r"\b(useState|useReducer|useContext|createContext|create|defineStore)\b")
 
@@ -84,15 +88,20 @@ def parse_frontend_file(path: Path, root: Path) -> ParseResult:
         )
         result.edges.append(Edge(source=owner_id, target=api_id, type="CALLS"))
 
-    for interaction in INTERACTION_RE.findall(text):
-        interaction_id = "feature:%s:%s" % (rel, interaction)
+    for index, entry in enumerate(_interaction_entries(text), start=1):
+        interaction = entry["event"]
+        interaction_id = "feature:%s:%s:%d" % (rel, interaction, index)
         result.nodes.append(
             Node(
                 id=interaction_id,
                 type="Feature",
-                name=interaction,
+                name=entry["name"],
                 path=rel,
-                metadata={"interaction": interaction},
+                metadata={
+                    "interaction": interaction,
+                    "label": entry["label"],
+                    "handler": entry["handler"],
+                },
             )
         )
         result.edges.append(Edge(source=owner_id, target=interaction_id, type="DEPENDS"))
@@ -108,6 +117,49 @@ def _owner_node_id(path: Path, root: Path) -> str:
     if owner_type == "Component":
         return "component:%s" % rel
     return "module:%s" % rel
+
+
+def _interaction_entries(text: str) -> list:
+    entries = []
+    for match in INTERACTION_TAG_RE.finditer(text):
+        event = match.group("event")
+        label = _clean_label(match.group("body"))
+        handler = match.group("handler").strip("\"'")
+        entries.append(
+            {
+                "event": event,
+                "label": label,
+                "handler": handler,
+                "name": _interaction_name(event, label, handler),
+            }
+        )
+
+    if entries:
+        return entries
+
+    return [
+        {"event": event, "label": "", "handler": "", "name": _interaction_name(event, "", "")}
+        for event in INTERACTION_RE.findall(text)
+    ]
+
+
+def _clean_label(value: str) -> str:
+    text = re.sub(r"<[^>]+>", " ", value)
+    text = re.sub(r"\{[^}]+\}", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _interaction_name(event: str, label: str, handler: str) -> str:
+    verbs = {
+        "onClick": "点击",
+        "onSubmit": "提交",
+        "onChange": "变更",
+        "onBlur": "失焦",
+        "onFocus": "聚焦",
+    }
+    verb = verbs.get(event, event)
+    target = label or handler
+    return "%s：%s" % (verb, target) if target else verb
 
 
 def _owner_type(path: Path, root: Path) -> str:

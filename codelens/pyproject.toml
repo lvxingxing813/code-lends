@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "codelens"
 version = "0.1.0"
-description = "Project graph and requirement impact analysis MVP"
+description = "Frontend project graph and requirement impact analysis MVP"
 requires-python = ">=3.9"
 dependencies = []
 
@@ -14,4 +14,3 @@ codelens = "codelens.cli:entrypoint"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-

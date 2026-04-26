@@ -20,7 +20,7 @@ IGNORED_DIRS = {
     ".venv",
 }
 
-SUPPORTED_SUFFIXES = {".py", ".ts", ".tsx", ".js", ".jsx", ".java", ".md", ".mdx"}
+SUPPORTED_SUFFIXES = {".ts", ".tsx", ".js", ".jsx", ".md", ".mdx"}
 
 
 class UnsupportedFile(ValueError):

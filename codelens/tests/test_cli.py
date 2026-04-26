@@ -19,14 +19,13 @@ class CliTest(unittest.TestCase):
     def test_scan_and_analyze_generate_files(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            app_file = root / "app.py"
-            app_file.write_text(
+            page_file = root / "src" / "app" / "login" / "page.tsx"
+            page_file.parent.mkdir(parents=True)
+            page_file.write_text(
                 """
-from fastapi import APIRouter
-router = APIRouter()
-@router.post("/api/login")
-def login():
-    return {"ok": True}
+export default function LoginPage() {
+  return <button onClick={() => fetch("/api/login", { method: "POST" })}>登录</button>;
+}
 """.strip(),
                 encoding="utf-8",
             )
@@ -44,14 +43,13 @@ def login():
     def test_export_generates_static_html(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            app_file = root / "app.py"
-            app_file.write_text(
+            page_file = root / "src" / "app" / "login" / "page.tsx"
+            page_file.parent.mkdir(parents=True)
+            page_file.write_text(
                 """
-from fastapi import APIRouter
-router = APIRouter()
-@router.post("/api/login")
-def login():
-    return {"ok": True}
+export default function LoginPage() {
+  return <button onClick={() => fetch("/api/login", { method: "POST" })}>登录</button>;
+}
 """.strip(),
                 encoding="utf-8",
             )
@@ -64,7 +62,7 @@ def login():
 
             html = (root / ".codelens" / "report.html").read_text(encoding="utf-8")
             self.assertEqual(code, 0)
-            self.assertIn("CodeLens Demo Report", html)
+            self.assertIn("CodeLens 功能点图谱", html)
             self.assertIn("graph-data", html)
             self.assertIn("修改用户登录验证码规则", html)
 
